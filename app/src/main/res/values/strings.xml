@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">LyricsMatch</string>
+    <string name="hello_world">Olá mundo!</string>
+    <string name="action_about">Sobre</string>
+    <string name="action_search">Pesquisar</string>
+    <string name="search_hint">Pesquisar artista...</string>
+</resources>
