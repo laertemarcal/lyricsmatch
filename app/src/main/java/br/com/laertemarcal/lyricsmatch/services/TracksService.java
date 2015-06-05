@@ -1,9 +1,7 @@
 package br.com.laertemarcal.lyricsmatch.services;
 
-import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.View;
-import android.widget.ProgressBar;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.RequestQueue;
@@ -21,25 +19,24 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import br.com.laertemarcal.lyricsmatch.R;
 import br.com.laertemarcal.lyricsmatch.fragments.ArtistsFragment;
+import br.com.laertemarcal.lyricsmatch.fragments.TracksFragment;
 import br.com.laertemarcal.lyricsmatch.model.Artist;
+import br.com.laertemarcal.lyricsmatch.model.Track;
 
 /**
  * Created by Laerte on 02/06/2015.
  */
-public class ArtistsService {
+public class TracksService {
 
-    private final String url = "https://musixmatchcom-musixmatch.p.mashape.com/wsr/1.1/artist.search?page=1&page_size=50&s_artist_rating=desc&q_artist=";
-    private final ArtistsFragment handler;
+    private final String url = "https://musixmatchcom-musixmatch.p.mashape.com/wsr/1.1/track.search?f_has_lyrics=1&page=1&page_size=50&s_track_rating=desc&q_artist=";
+    private final TracksFragment handler;
 
-    public ArtistsService(ArtistsFragment handler) {
+    public TracksService(TracksFragment handler) {
         this.handler = handler;
     }
 
     public void sendRequest(String params) {
-        handler.getSpinner().setVisibility(View.VISIBLE);
-
         try {
             params = URLEncoder.encode(params, "UTF-8");
         } catch (UnsupportedEncodingException e) {
@@ -48,24 +45,24 @@ public class ArtistsService {
 
         RequestQueue queue = Volley.newRequestQueue(handler.getActivity());
 
+        handler.getSpinner().setVisibility(View.VISIBLE);
+
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(url + params, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
+                Log.d("RESPOSTA", response.toString());
                 handler.getSpinner().setVisibility(View.GONE);
-                ArrayList<Artist> artists = new ArrayList<>();
                 try {
-                    artists = new Artist().getArtists(response);
+                    ArrayList<Track> tracks = new Track().getTracks(response);
+                    handler.setTracksOnView(tracks);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                handler.setArtistsOnView(artists);
-
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.e("ERRO", error.getMessage());
-                handler.getSpinner().setVisibility(View.INVISIBLE);
             }
         }) {
             @Override

@@ -1,12 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:weightSum="1">
 
     <TextView
-        android:layout_width="wrap_content"
+        android:id="@+id/tvArtistName"
+        android:layout_width="220dp"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:id="@+id/textView"
-        android:layout_gravity="center_horizontal" />
-</LinearLayout>
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="@color/abc_primary_text_material_dark"
+        android:text="TRU Concept ft. Romany"
+        android:layout_centerVertical="true"
+        android:textStyle="bold"
+        android:layout_marginTop="50dp"
+        />
+
+    <TextView
+        android:id="@+id/tvArtistGenre"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:text="Dance, Deep House, UK Garage"
+        android:textColor="@color/abc_secondary_text_material_dark"
+        android:layout_marginTop="20dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:gravity="end"
+        android:layout_marginEnd="10dp"
+        android:layout_marginRight="10dp"
+        />
+
+</RelativeLayout>
