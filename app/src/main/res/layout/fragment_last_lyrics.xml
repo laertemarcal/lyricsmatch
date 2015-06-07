@@ -1,26 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <TextView
+        android:id="@+id/textViewLastLyricTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/textViewLastLyricTitle"
-        android:layout_marginTop="16dp"
         android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp"
         android:textColor="@color/primary_text_default_material_dark"
-        android:textStyle="bold"
-        android:textSize="@dimen/abc_text_size_headline_material" />
+        android:textSize="@dimen/abc_text_size_headline_material"
+        android:textStyle="bold" />
 
     <TextView
+        android:id="@+id/textViewLastLyricBody"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/textViewLastLyricBody"
-        android:textSize="@dimen/abc_text_size_small_material"
+        android:layout_below="@+id/textViewLastLyricTitle"
+        android:layout_marginBottom="@dimen/activity_horizontal_margin"
         android:layout_marginLeft="@dimen/activity_horizontal_margin"
         android:layout_marginRight="@dimen/activity_horizontal_margin"
-        android:layout_marginBottom="@dimen/activity_horizontal_margin"
         android:layout_marginTop="@dimen/activity_horizontal_margin"
-        android:layout_below="@+id/textViewLastLyricTitle" />
+        android:scrollbars="vertical"
+        android:textSize="@dimen/abc_text_size_small_material" />
+
 </RelativeLayout>
