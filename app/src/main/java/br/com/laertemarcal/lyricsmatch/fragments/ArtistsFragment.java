@@ -23,8 +23,9 @@ import br.com.laertemarcal.lyricsmatch.model.Artist;
 
 public class ArtistsFragment extends Fragment {
 
-    private RecyclerView mArtistsRecyclerView;
+    private RecyclerView mRecyclerView;
     private ProgressBar mSpinner;
+    private ArtistsAdapter mArtistsAdapter = new ArtistsAdapter(new ArrayList<Artist>());
 
     public ArtistsFragment() {
     }
@@ -34,15 +35,15 @@ public class ArtistsFragment extends Fragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
 
-        mArtistsRecyclerView = (RecyclerView) rootView.findViewById(R.id.recyclerView);
-        mArtistsRecyclerView.setHasFixedSize(true);
-        mArtistsRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        mArtistsRecyclerView.setAdapter(new ArtistsAdapter(new ArrayList<Artist>()));
-        mArtistsRecyclerView.addOnItemTouchListener(
+        mRecyclerView = (RecyclerView) rootView.findViewById(R.id.recyclerView);
+        mRecyclerView.setHasFixedSize(true);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        mRecyclerView.setAdapter(mArtistsAdapter);
+        mRecyclerView.addOnItemTouchListener(
                 new RecyclerItemClickListener(getActivity(), new RecyclerItemClickListener.OnItemClickListener() {
                     @Override
                     public void onItemClick(View view, int position) {
-                        ArtistsAdapter ad = (ArtistsAdapter) mArtistsRecyclerView.getAdapter();
+                        ArtistsAdapter ad = (ArtistsAdapter) mRecyclerView.getAdapter();
                         ArrayList<Artist> artists = ad.getDataset();
                         Artist artist = artists.get(position);
 
@@ -70,12 +71,16 @@ public class ArtistsFragment extends Fragment {
         return rootView;
     }
 
-    public void setArtistsOnView(ArrayList<Artist> artists) {
-        mArtistsRecyclerView.swapAdapter(new ArtistsAdapter(artists), false);
+    public RecyclerView getRecyclerView() {
+        return mRecyclerView;
     }
 
     public ProgressBar getSpinner() {
         return mSpinner;
+    }
+
+    public void setArtistsAdapter(ArtistsAdapter artistsAdapter) {
+        mArtistsAdapter = artistsAdapter;
     }
 
 }

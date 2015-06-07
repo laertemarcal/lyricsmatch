@@ -1,19 +1,14 @@
 package br.com.laertemarcal.lyricsmatch.adapters;
 
-import android.provider.MediaStore;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
-
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
 import br.com.laertemarcal.lyricsmatch.R;
-import br.com.laertemarcal.lyricsmatch.activities.MainActivity;
 import br.com.laertemarcal.lyricsmatch.model.Artist;
 
 /**

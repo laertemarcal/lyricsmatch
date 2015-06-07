@@ -2,23 +2,22 @@ package br.com.laertemarcal.lyricsmatch.activities;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
 import br.com.laertemarcal.lyricsmatch.R;
 import br.com.laertemarcal.lyricsmatch.fragments.ArtistsFragment;
+import br.com.laertemarcal.lyricsmatch.fragments.LastLyricsFragment;
 import br.com.laertemarcal.lyricsmatch.services.ArtistsService;
 
 
 public class MainActivity extends AppCompatActivity {
 
     ArtistsFragment artistsFragment = new ArtistsFragment();
-    ArtistsService as = new ArtistsService(artistsFragment);
+    ArtistsService artistsService = new ArtistsService(artistsFragment);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.container, artistsFragment)
+                    .addToBackStack(null)
                     .commit();
         }
     }
@@ -42,14 +42,16 @@ public class MainActivity extends AppCompatActivity {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                Log.d("QUERY", query);
-
-                if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
-                    getSupportFragmentManager().beginTransaction().replace(R.id.container, artistsFragment).addToBackStack(null).commit();
+                Fragment frag = getSupportFragmentManager().findFragmentById(R.id.container);
+                if (!(frag instanceof ArtistsFragment)) {
+                    getSupportFragmentManager().beginTransaction().replace(R.id.container, artistsFragment).commit();
                     getSupportFragmentManager().executePendingTransactions();
                 }
 
-                as.sendRequest(query);
+                artistsFragment.getSpinner().setVisibility(View.VISIBLE);
+                artistsFragment.getRecyclerView().setVisibility(View.INVISIBLE);
+
+                artistsService.sendRequest(query);
 
                 return false;
             }
@@ -70,23 +72,27 @@ public class MainActivity extends AppCompatActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_about) {
-            return true;
+        switch (id) {
+            case R.id.action_about:
+                return true;
+            case R.id.action_lastViewed:
+                replaceFragment(new LastLyricsFragment());
+                break;
         }
 
         return super.onOptionsItemSelected(item);
     }
 
     @Override
-    public void onBackPressed(){
-        FragmentManager fm = getSupportFragmentManager();
-        if (fm.getBackStackEntryCount() > 0) {
-            Log.i("MainActivity", "popping backstack");
-            fm.popBackStack();
+    public void onBackPressed() {
+        if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
+            getSupportFragmentManager().popBackStack();
         } else {
-            Log.i("MainActivity", "nothing on backstack, calling super");
             super.onBackPressed();
         }
+    }
+
+    private void replaceFragment(Fragment fragment) {
+        getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment).addToBackStack(null).commit();
     }
 }

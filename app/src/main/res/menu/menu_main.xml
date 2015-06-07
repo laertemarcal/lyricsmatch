@@ -7,6 +7,10 @@
         android:title="@string/action_about"
         app:showAsAction="never" />
     <item
+        android:id="@+id/action_lastViewed"
+        android:title="@string/action_lastViewed"
+        app:showAsAction="never" />
+    <item
         android:id="@+id/action_search"
         android:icon="@drawable/ic_search_white_24dp"
         android:title="@string/action_search"

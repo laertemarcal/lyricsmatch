@@ -1,10 +1,11 @@
 <resources>
     <string name="app_name">LyricsMatch</string>
-    <string name="hello_world">Olá mundo!</string>
     <string name="action_about">Sobre</string>
     <string name="action_search">Pesquisar</string>
-    <string name="search_hint">Pesquisar artista...</string>
-
-<!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="action_lastViewed">Última Pesquisa</string>
+    <string name="search_hint">Pesquisar artista/banda</string>
+    <string name="response_error">Não foi possível realizar a pesquisa</string>
+    <string name="response_not_found">Não foram encontrados resultados</string>
+    <string name="unsaved_last_lyric_title">Não encontrado</string>
+    <string name="unsaved_last_lyric_body">Ainda não foi pesquisada nenhuma letra de música.\nVerifique a conexão com a internet</string>
 </resources>

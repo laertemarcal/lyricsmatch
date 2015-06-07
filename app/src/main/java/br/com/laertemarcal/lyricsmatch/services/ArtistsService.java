@@ -1,9 +1,8 @@
 package br.com.laertemarcal.lyricsmatch.services;
 
-import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.View;
-import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.RequestQueue;
@@ -22,6 +21,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import br.com.laertemarcal.lyricsmatch.R;
+import br.com.laertemarcal.lyricsmatch.adapters.ArtistsAdapter;
 import br.com.laertemarcal.lyricsmatch.fragments.ArtistsFragment;
 import br.com.laertemarcal.lyricsmatch.model.Artist;
 
@@ -37,35 +37,39 @@ public class ArtistsService {
         this.handler = handler;
     }
 
-    public void sendRequest(String params) {
-        handler.getSpinner().setVisibility(View.VISIBLE);
+    public void sendRequest(String param) {
 
         try {
-            params = URLEncoder.encode(params, "UTF-8");
+            param = URLEncoder.encode(param, "UTF-8");
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
 
         RequestQueue queue = Volley.newRequestQueue(handler.getActivity());
 
-        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(url + params, new Response.Listener<JSONArray>() {
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(url + param, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
+                if (response.toString().isEmpty() || response.length() == 0) {
+                    Toast.makeText(handler.getActivity(), handler.getResources().getString(R.string.response_not_found), Toast.LENGTH_LONG).show();
+                }
                 handler.getSpinner().setVisibility(View.GONE);
-                ArrayList<Artist> artists = new ArrayList<>();
+                handler.getRecyclerView().setVisibility(View.VISIBLE);
                 try {
-                    artists = new Artist().getArtists(response);
+                    ArrayList<Artist> artists = new Artist().getArtists(response);
+                    ArtistsAdapter ad = new ArtistsAdapter(artists);
+                    handler.setArtistsAdapter(ad);
+                    handler.getRecyclerView().setAdapter(ad);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                handler.setArtistsOnView(artists);
-
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.e("ERRO", error.getMessage());
-                handler.getSpinner().setVisibility(View.INVISIBLE);
+                handler.getSpinner().setVisibility(View.GONE);
+                Toast.makeText(handler.getActivity(), handler.getResources().getString(R.string.response_error), Toast.LENGTH_LONG).show();
             }
         }) {
             @Override
