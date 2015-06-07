@@ -5,5 +5,5 @@ Aplicativo simples criado usando a [**_Musixmatch API_**](http://api.musixmatch.
 ## Membros
 > [Laerte Marçal](../../../../laertemarcal)
 
-### Experimente
+## Experimente
 Experimente o [app](https://appetize.io/embed/fq655qng5758qt8212v7bfrj1w?device=nexus5&scale=100&autoplay=false&orientation=portrait&deviceColor=black).
