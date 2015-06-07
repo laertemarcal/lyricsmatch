@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.method.ScrollingMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,6 +42,7 @@ public class LastLyricsFragment extends Fragment {
 
         mTextViewTitle.setText(mTitle);
         mTextViewBody.setText(mBody);
+        mTextViewBody.setMovementMethod(new ScrollingMovementMethod());
 
         return rootView;
     }

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.method.ScrollingMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -46,6 +47,7 @@ public class LyricsFragment extends Fragment {
         mSpinner = (ProgressBar) rootView.findViewById(R.id.progressBar2);
         mTextViewTrackTitle = (TextView) rootView.findViewById(R.id.tvTrackTitle);
         mTextViewLyricsBody = (TextView) rootView.findViewById(R.id.tvLyricsBody);
+        mTextViewLyricsBody.setMovementMethod(new ScrollingMovementMethod());
 
         mSpinner.setVisibility(View.VISIBLE);
 
